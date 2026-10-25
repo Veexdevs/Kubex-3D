@@ -1,4 +1,7 @@
 /* Kubex 3D — Modelador 3D móvel inspirado no Blender */
+import * as THREE from "../vendor/three/three.module.min.js";
+import { OrbitControls } from "../vendor/three/addons/controls/OrbitControls.js";
+
 (function () {
   "use strict";
 
@@ -46,7 +49,7 @@
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   container.appendChild(renderer.domElement);
 
-  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.dampingFactor = 0.08;
   controls.minDistance = 1;
@@ -176,7 +179,15 @@
     controls.enabled = t === "select";
     if (selectedObject) toast("Ferramenta: " + t.toUpperCase());
   }
-  toolBtns.forEach((b) => b.addEventListener("click", () => setTool(b.dataset.tool));
+  toolBtns.forEach((b) => {
+    b.addEventListener("click", () => {
+      if (b.dataset.tool === "add") {
+        modalAdd.classList.add("show");
+        return;
+      }
+      setTool(b.dataset.tool);
+    });
+  });
 
   document.getElementById("btnAddCube").addEventListener("click", () => {
     modalAdd.classList.add("show");

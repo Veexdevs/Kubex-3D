@@ -1,74 +1,61 @@
-# Kubex 3D — Gerando o .apk (Android)
+# Kubex 3D — APK Android
 
-Este repositório já contém o **projeto Android nativo** pronto em `android/`. Você não precisa rodar o Capacitor novamente — basta abrir no Android Studio e gerar o APK.
+## Baixar APK pronto (recomendado)
 
-> ⚠️ Este ambiente **não tem Android SDK / Java / Gradle**, portanto não é possível compilar o `.apk` aqui. Você deve gerar o APK na sua máquina com o **Android Studio**.
+O APK é compilado pelo **GitHub Actions** e publicado em **Releases**:
 
----
+**Download direto:** https://github.com/Veexdevs/Kubex-3D/releases/download/v1.0.0/Kubex-3D.apk
 
-## Pré-requisitos (sua máquina)
+Página da release: https://github.com/Veexdevs/Kubex-3D/releases/tag/v1.0.0
 
-- **Android Studio** — https://developer.android.com/studio
-  - Via *SDK Manager*, instale: Android SDK Build-Tools, Platform-Tools e uma plataforma (ex.: Android 14 / API 34).
-  - Configure `ANDROID_HOME` (ou `ANDROID_SDK_ROOT`).
+Baixe `Kubex-3D.apk`, abra no celular e permita **Instalar apps desconhecidos** se o Android pedir.
 
----
+## Como o GitHub gera o APK
 
-## Como gerar o .apk (passo a passo)
+O workflow `.github/workflows/build-apk.yml` roda a cada push e executa:
 
-1. Clone/abra este repositório na sua máquina.
-2. Abra o Android Studio: **File > Open** → selecione a pasta `android/` deste projeto.
-3. Aguarde o Gradle sincronizar (primeira vez pode demorar e baixar dependências).
-4. **Build > Build Bundle(s) / APK(s) > Build APK(s)**.
-5. O APK fica em: `android/app/build/outputs/apk/debug/app-debug.apk`
+```bash
+npm ci
+npm run prepare:www
+npx cap sync android
+cd android && ./gradlew assembleDebug --no-daemon --stacktrace
+```
 
-Para APK assinado (release/Publicação):
-- **Build > Generate Signed Bundle / APK** (é preciso de um keystore `.jks`).
+Depois ele:
 
----
+1. renomeia o resultado para `Kubex-3D.apk`;
+2. verifica a assinatura com `apksigner`;
+3. publica em **Actions → Artifacts**;
+4. publica em **Releases → v1.0.0** para download direto pelo celular.
 
-## Estrutura do projeto
+## Gerar localmente no Android Studio (opcional)
+
+Pré-requisitos: Node.js 22, JDK 17 e Android Studio/SDK 34.
+
+```bash
+npm ci
+npm run cap:sync
+npx cap open android
+```
+
+No Android Studio: **Build > Build Bundle(s) / APK(s) > Build APK(s)**.
+
+Saída: `android/app/build/outputs/apk/debug/app-debug.apk`
+
+## Estrutura
 
 ```
 Kubex-3D/
-├── www/                     # código-fonte web do app (comitado)
-│   ├── index.html           # interface do modelador
-│   ├── css/style.css        # tema preto e branco
-│   ├── js/app.js            # Three.js: cena, seleção, mover/rotacionar/escalar
-│   ├── assets/              # logos Kubex 3D (preto e branco)
-│   ├── manifest.json        # PWA manifest
-│   └── sw.js                # service worker
-├── android/                 # projeto Android nativo (comitado — pronto p/ Android Studio)
-├── capacitor.config.json    # config Capacitor (appId com.veexdevs.kubex3d)
-├── package.json             # dependências (só se quiser regenerar com Capacitor)
-├── BUILD_APK.md             # este guia
-└── README.md
+├── .github/workflows/build-apk.yml  # compila e publica o APK
+├── www/                             # interface e motor 3D do app
+│   ├── index.html
+│   ├── css/style.css                # tema preto e branco
+│   ├── js/app.js                    # Three.js e ferramentas
+│   └── assets/                      # logos Kubex 3D
+├── scripts/prepare-www.mjs          # copia o Three.js para dentro do app
+├── android/                         # projeto Android/Capacitor
+├── capacitor.config.json
+└── package.json
 ```
 
----
-
-## Regenerar o projeto Android com Capacitor (opcional)
-
-Se preferir recriar do zero (ex.: mudar `appId`):
-
-```bash
-npm install
-npx cap init kubex3d "Kubex 3D" --web-dir=www
-npx cap add android
-npx cap copy
-npx cap open android   # abre no Android Studio
-```
-
----
-
-## Funcionalidades do modelador
-
-- Viewport 3D em tempo real (Three.js)
-- Orbitar (arrastar), zoom e câmera com suavização
-- Adicionar objetos: cubo, esfera, cilindro, cone, toro
-- Selecionar objeto (toque/clique)
-- Transformar: **Mover**, **Rotacionar**, **Escalar** (arrasto na tela)
-- Excluir objeto selecionado
-- Painel de propriedades: nome, tipo, localização, rotação, escala
-- Tema preto e branco, ícones de eixos X/Y/Z
-- Marca **Kubex 3D** com a logo anexada
+O Three.js é copiado de `node_modules/three` para `www/vendor/three` durante o build. Assim, o APK funciona sem depender de CDN.

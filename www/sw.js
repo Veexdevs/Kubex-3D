@@ -1,15 +1,15 @@
 /* Kubex 3D - Service Worker */
 const CACHE_NAME = "kubex-3d-v1";
 const ASSETS = [
-  "/",
-  "/index.html",
-  "/css/style.css",
-  "/js/app.js",
-  "/manifest.json",
-  "/assets/logo-kubex.png",
-  "/assets/logo-kubex-no-text.png",
-  "https://unpkg.com/three@0.160.0/build/three.min.js",
-  "https://unpkg.com/three@0.160.0/examples/js/controls/OrbitControls.js"
+  "./",
+  "./index.html",
+  "./css/style.css",
+  "./js/app.js",
+  "./manifest.json",
+  "./assets/logo-kubex.png",
+  "./assets/logo-kubex-no-text.png",
+  "./vendor/three/three.module.min.js",
+  "./vendor/three/addons/controls/OrbitControls.js"
 ];
 
 self.addEventListener("install", (event) => {
