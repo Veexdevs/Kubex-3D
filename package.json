@@ -4,18 +4,29 @@
   "description": "Kubex 3D - Modelador 3D móvel inspirado no Blender (tema preto e branco)",
   "main": "index.html",
   "scripts": {
-    "cap:init": "npx cap init kubex3d \"Kubex 3D\" --web-dir=. --app-id=com.veexdevs.kubex3d",
+    "prepare:www": "node scripts/prepare-www.mjs",
+    "cap:init": "npx cap init kubex3d \"Kubex 3D\" --web-dir=www",
     "cap:android": "npx cap add android",
-    "cap:copy": "npx cap copy",
-    "cap:sync": "npx cap sync android",
+    "cap:copy": "npm run prepare:www && npx cap copy android",
+    "cap:sync": "npm run prepare:www && npx cap sync android",
     "cap:open": "npx cap open android"
   },
-  "keywords": ["3d", "blender", "modelador", "mobile", "pwa", "capacitor"],
+  "keywords": [
+    "3d",
+    "blender",
+    "modelador",
+    "mobile",
+    "pwa",
+    "capacitor"
+  ],
   "author": "Veexdevs",
   "license": "MIT",
   "devDependencies": {
-    "@capacitor/core": "^6.1.0",
+    "@capacitor/android": "^6.1.0",
     "@capacitor/cli": "^6.1.0",
-    "@capacitor/android": "^6.1.0"
+    "@capacitor/core": "^6.1.0"
+  },
+  "dependencies": {
+    "three": "^0.160.0"
   }
 }

@@ -3,7 +3,13 @@
 Modelador 3D móvel inspirado no Blender, com identidade visual **preto e branco** e a marca **Kubex 3D** (logo anexada).
 
 > **Este não é um site simples:** é um projeto **Capacitor** pronto para ser compilado em **`.apk` (Android)**.  
-> O binário `.apk` é gerado automaticamente pelo **GitHub Actions** a cada push (veja abaixo). Não é necessário instalar o Android Studio.
+> O binário `.apk` é gerado automaticamente pelo **GitHub Actions** a cada push e publicado em **Releases**. Não é necessário instalar o Android Studio.
+
+## 📱 Baixar o APK pronto
+
+### **[⬇️ Baixar Kubex-3D.apk](https://github.com/Veexdevs/Kubex-3D/releases/download/v1.0.0/Kubex-3D.apk)**
+
+Depois de baixar, abra o arquivo no Android e permita **Instalar apps desconhecidos** se o sistema pedir.
 
 ## O que está incluído
 
@@ -29,18 +35,19 @@ Modelador 3D móvel inspirado no Blender, com identidade visual **preto e branco
 ## Executar localmente (web)
 
 ```bash
-python3 -m http.server 5173 --bind 0.0.0.0
+npm ci
+npm run prepare:www
+python3 -m http.server 5173 --bind 0.0.0.0 --directory www
 # http://localhost:5173
 ```
 
-## Baixando o .apk compilado (GitHub Actions)
+## Baixando o .apk compilado (GitHub Actions + Releases)
 
-O APK é compilado automaticamente na nuvem do GitHub a cada push. Para baixar:
+O APK é compilado automaticamente na nuvem do GitHub a cada push.
 
-1. Acesse a aba **Actions** deste repositório: `https://github.com/Veexdevs/Kubex-3D/actions`
-2. Clique na execução mais recente de **Build APK**.
-3. Em **Artifacts**, baixe **`Kubex-3D-APK`** (extraia o `.zip` para obter o `app-debug.apk`).
-4. Instale o `.apk` no seu Android (permita "Instalar apps desconhecidos" se pedir).
+- **Download direto:** https://github.com/Veexdevs/Kubex-3D/releases/download/v1.0.0/Kubex-3D.apk
+- **Página da release:** https://github.com/Veexdevs/Kubex-3D/releases/tag/v1.0.0
+- **Artifact da execução:** aba **Actions** → execução **Build APK** → **Artifacts** → `Kubex-3D-APK`.
 
 Ou dispare manualmente: aba Actions → **Build APK** → **Run workflow**.
 
@@ -49,10 +56,8 @@ Ou dispare manualmente: aba Actions → **Build APK** → **Run workflow**.
 Veja `BUILD_APK.md`. Resumo:
 
 ```bash
-npm install
-npx cap init kubex3d "Kubex 3D" --web-dir=www
-npx cap add android
-npx cap copy
+npm ci
+npm run cap:sync
 npx cap open android
 # No Android Studio: Build > Build APK(s)
 ```
@@ -62,7 +67,7 @@ npx cap open android
 - [Three.js](https://threejs.org/) — renderização 3D
 - [Capacitor](https://capacitorjs.com/) — ponte web → app Android nativo
 - Service Worker + Web App Manifest — PWA instalável
-- HTML5/CSS/JS puro — sem build, sem dependências de compilação
+- Three.js copiado para `www/vendor/` durante o build — o APK não depende de CDN
 
 ---
 
