@@ -3,7 +3,7 @@
 Modelador 3D móvel inspirado no Blender, com identidade visual **preto e branco** e a marca **Kubex 3D** (logo anexada).
 
 > **Este não é um site simples:** é um projeto **Capacitor** pronto para ser compilado em **`.apk` (Android)**.  
-> ⚠️ O binário `.apk` **não pode ser gerado neste ambiente** (sem Android SDK / Java / Gradle e sem permissão de rede para baixá-los). Você deve compilar no Android Studio na sua máquina — veja `BUILD_APK.md`.
+> O binário `.apk` é gerado automaticamente pelo **GitHub Actions** a cada push (veja abaixo). Não é necessário instalar o Android Studio.
 
 ## O que está incluído
 
@@ -33,13 +33,24 @@ python3 -m http.server 5173 --bind 0.0.0.0
 # http://localhost:5173
 ```
 
-## Gerando o .apk (Android Studio)
+## Baixando o .apk compilado (GitHub Actions)
+
+O APK é compilado automaticamente na nuvem do GitHub a cada push. Para baixar:
+
+1. Acesse a aba **Actions** deste repositório: `https://github.com/Veexdevs/Kubex-3D/actions`
+2. Clique na execução mais recente de **Build APK**.
+3. Em **Artifacts**, baixe **`Kubex-3D-APK`** (extraia o `.zip` para obter o `app-debug.apk`).
+4. Instale o `.apk` no seu Android (permita "Instalar apps desconhecidos" se pedir).
+
+Ou dispare manualmente: aba Actions → **Build APK** → **Run workflow**.
+
+## Gerando o .apk localmente (Android Studio)
 
 Veja `BUILD_APK.md`. Resumo:
 
 ```bash
 npm install
-npx cap init kubex3d "Kubex 3D" --web-dir=. --app-id=com.veexdevs.kubex3d
+npx cap init kubex3d "Kubex 3D" --web-dir=www
 npx cap add android
 npx cap copy
 npx cap open android
