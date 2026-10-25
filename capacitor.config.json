@@ -1,17 +1,9 @@
 {
   "appId": "com.veexdevs.kubex3d",
   "appName": "Kubex 3D",
-  "webDir": ".",
+  "webDir": "www",
   "bundledWebRuntime": false,
   "android": {
-    "buildOptions": {
-      "release": {
-        "keystorePath": "",
-        "keystorePassword": "",
-        "keyAlias": "",
-        "keyPassword": ""
-      }
-    },
     "backgroundColor": "#000000",
     "allowMixedContent": false,
     "captureInput": true
@@ -24,9 +16,5 @@
       "androidSplashResourceName": "splash",
       "androidScaleType": "CENTER_CROP"
     }
-  },
-  "server": {
-    "url": "http://127.0.0.1:5173",
-    "cleartext": true
   }
 }

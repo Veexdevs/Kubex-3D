@@ -7,13 +7,12 @@ Modelador 3D móvel inspirado no Blender, com identidade visual **preto e branco
 
 ## O que está incluído
 
-- `index.html` — interface: topbar com logo Kubex 3D, viewport 3D, barra de ferramentas inferior (estilo Blender), painel de propriedades lateral
-- `css/style.css` — tema preto e branco
-- `js/app.js` — motor Three.js: cena, câmera, controles de órbita, grade, seleção, **mover / rotacionar / escalar** (arrasto na tela), adicionar/excluir objetos, painel de propriedades sincronizado
-- `assets/logo-kubex.png` / `assets/logo-kubex-no-text.png` — logos anexadas
-- `manifest.json` + `sw.js` — PWA (instalável na tela inicial, off-line)
-- `package.json` + `capacitor.config.json` — configuração Capacitor para empacotar como app Android
-- `BUILD_APK.md` — guia passo a passo para gerar o `.apk` no Android Studio
+- `www/index.html`, `www/css/`, `www/js/` — interface e motor Three.js do modelador (estilo Blender)
+- `www/assets/logo-kubex.png` / `www/assets/logo-kubex-no-text.png` — logos anexadas (preto e branco)
+- `www/manifest.json` + `www/sw.js` — PWA (instalável na tela inicial, off-line)
+- `android/` — projeto Android nativo **incluído**; abra no Android Studio e gere o `.apk`
+- `capacitor.config.json` — configuração Capacitor (`appId: com.veexdevs.kubex3d`, `webDir: www`)
+- `BUILD_APK.md` — guia para gerar o `.apk` no Android Studio
 
 ## Recursos (modelador Blender-like)
 
